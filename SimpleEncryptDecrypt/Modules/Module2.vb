@@ -1,55 +1,61 @@
 ﻿Module Module2
+
 #Region "Init Application"
-    Private WithEvents mytoolstrip As New ToolStrip
-    Private WithEvents mytoolstrip_combo As New ToolStripComboBox
-    Private mytoolstip_label As New ToolStripLabel
-    Private cypher_array As Array = {"ROT5", "ROT13", "ROT18", "ROT47", "Rotate by"}
-    Public Sub init_toolstrip_box(ByVal frm As Form)
-        frm.Controls.Add(mytoolstrip)
-        With mytoolstip_label
+
+    Private WithEvents Mytoolstrip As New ToolStrip
+    Private WithEvents Mytoolstrip_combo As New ToolStripComboBox
+    Private ReadOnly Mytoolstip_label As New ToolStripLabel
+    Private ReadOnly Cypher_array As String() = {"ROT5", "ROT13", "ROT18", "ROT47", "Rotate by"}
+
+    Public Sub Init_toolstrip_box(ByVal frm As Form)
+        frm.Controls.Add(Mytoolstrip)
+        With Mytoolstip_label
             .Text = "Select cypher: "
         End With
-        For Each i In cypher_array
-            mytoolstrip_combo.Items.Add(i)
+        For Each i In Cypher_array
+            Mytoolstrip_combo.Items.Add(i)
         Next
-        With mytoolstrip_combo
+        With Mytoolstrip_combo
             .SelectedIndex = 1
             .DropDownStyle = ComboBoxStyle.DropDownList
         End With
 
-        With mytoolstrip
-            .Items.Add(mytoolstip_label)
-            .Items.Add(mytoolstrip_combo)
+        With Mytoolstrip
+            .Items.Add(Mytoolstip_label)
+            .Items.Add(Mytoolstrip_combo)
         End With
     End Sub
-    Private Sub mytoolstrip_combo_OnSelect() Handles mytoolstrip_combo.SelectedIndexChanged
-        Select Case mytoolstrip_combo.SelectedIndex
+
+    Private Sub Mytoolstrip_combo_OnSelect() Handles Mytoolstrip_combo.SelectedIndexChanged
+        Select Case Mytoolstrip_combo.SelectedIndex
             Case 0 'ROT5
-                ROT5_cypher.opener(main)
+                ROT5_cypher.Opener(FRM_Main)
             Case 1 'ROT13
-                ROT13_cypher.opener(main)
+                ROT13_cypher.Opener(FRM_Main)
             Case 2 'ROT18
-                ROT18_cypher.opener(main)
+                ROT18_cypher.Opener(FRM_Main)
             Case 3 'ROT47
-                ROT47_cypher.opener(main)
+                ROT47_cypher.Opener(FRM_Main)
             Case 4 'Rotate by
-                Rotate_by_cypher.opener(main)
+                Rotate_by_cypher.Opener(FRM_Main)
         End Select
     End Sub
 
 #End Region
 
     Public Class ROT13_cypher
-        Private Shared Aline As Array = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"}
-        Private Shared Bline As Array = {"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
-        Private Shared LineA As New ArrayList
-        Private Shared LineB As New ArrayList
-        Private WithEvents encrypt_button As New Button
-        Private Sub encrypt_button_Click() Handles encrypt_button.Click
+        Private Shared ReadOnly Aline As String() = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"}
+        Private Shared ReadOnly Bline As String() = {"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
+        Private Shared ReadOnly LineA As New ArrayList
+        Private Shared ReadOnly LineB As New ArrayList
+        Private WithEvents Encrypt_button As New Button
+
+        Private Sub Encrypt_button_Click() Handles Encrypt_button.Click
             Dim b As New ROT13_cypher
-            main.TextBox2.Text = b.engine(main.TextBox1.Text)
+            FRM_Main.TextBox2.Text = b.Engine(FRM_Main.TextBox1.Text)
         End Sub
-        Public Shared Sub opener(ByVal form As Form)
+
+        Public Shared Sub Opener(ByVal form As Form)
             'set textbox sentence
             For Each ctrl In form.Controls
                 If ctrl.name = "GroupBox1" Then
@@ -66,44 +72,44 @@
 
             'create new button
             Dim s As New ROT13_cypher
-            With s.encrypt_button
+            With s.Encrypt_button
                 .Text = "ROT13 Cypher"
                 .Location = New Point(347, 50)
                 .Size = New Size(143, 26)
                 .Name = "cypherbutton"
             End With
-            form.Controls.Add(s.encrypt_button)
+            form.Controls.Add(s.Encrypt_button)
 
             'Fill Label
             LineA.Clear()
             LineB.Clear()
-            main.Label2.Text = Nothing
+            FRM_Main.Label2.Text = Nothing
             For u = 0 To Aline.Length - 1
                 LineA.Add(Aline(u))
-                main.Label2.Text += " " & Aline(u) & " |"
+                FRM_Main.Label2.Text += " " & Aline(u) & " |"
                 If u = Aline.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
-            main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
+            FRM_Main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
             For u = 0 To Bline.Length - 1
                 LineB.Add(Bline(u))
-                main.Label2.Text += " " & Bline(u) & " |"
+                FRM_Main.Label2.Text += " " & Bline(u) & " |"
                 If u = Bline.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
         End Sub
-        Public Function engine(ByVal completeString As String)
+
+        Public Function Engine(ByVal completeString As String)
             Dim u As Integer = completeString.Length
-            Dim bufferString As String = completeString
             Dim outputString As String = Nothing
             Dim doesLineContainChar As Boolean
 
             For i = 0 To u - 1
                 doesLineContainChar = False
 
-                bufferString = completeString.Substring(0, 1)
+                Dim bufferString As String = completeString.Substring(0, 1)
                 completeString = completeString.Remove(completeString.IndexOf(bufferString), 1)
 
                 For Each s In Aline
@@ -134,19 +140,22 @@
 
             Return outputString
         End Function
+
     End Class
 
     Public Class ROT47_cypher
-        Private Shared ALine As Array = {"!", """", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"}
-        Private Shared BLine As Array = {"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", "!", """", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"}
-        Private Shared LineA As New ArrayList
-        Private Shared LineB As New ArrayList
-        Private WithEvents encrypt_button As New Button
-        Private Sub encrypt_button_Click() Handles encrypt_button.Click
+        Private Shared ReadOnly ALine As Array = {"!", """", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"}
+        Private Shared ReadOnly BLine As Array = {"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~", "!", """", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"}
+        Private Shared ReadOnly LineA As New ArrayList
+        Private Shared ReadOnly LineB As New ArrayList
+        Private WithEvents Encrypt_button As New Button
+
+        Private Sub Encrypt_button_Click() Handles Encrypt_button.Click
             Dim b As New ROT47_cypher
-            main.TextBox2.Text = b.engine(main.TextBox1.Text)
+            FRM_Main.TextBox2.Text = b.Engine(FRM_Main.TextBox1.Text)
         End Sub
-        Public Shared Sub opener(ByVal form As Form)
+
+        Public Shared Sub Opener(ByVal form As Form)
             'set textbox sentence
             For Each ctrl In form.Controls
                 If ctrl.name = "GroupBox1" Then
@@ -163,42 +172,40 @@
 
             'create new button
             Dim s As New ROT47_cypher
-            With s.encrypt_button
+            With s.Encrypt_button
                 .Text = "ROT47 Cypher"
                 .Location = New Point(347, 50)
                 .Size = New Size(143, 26)
                 .Name = "cypherbutton"
             End With
-            form.Controls.Add(s.encrypt_button)
+            form.Controls.Add(s.Encrypt_button)
 
             'Fill Label
             LineA.Clear()
             LineB.Clear()
-            main.Label2.Text = Nothing
+            FRM_Main.Label2.Text = Nothing
             For u = 0 To ALine.Length - 1
                 LineA.Add(ALine(u))
                 'main.Label2.Text += " " & ALine(u) & " |"
-                main.Label2.Text += ALine(u)
+                FRM_Main.Label2.Text += ALine(u)
                 If u = ALine.Length + 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
-            main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
+            FRM_Main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
             For u = 0 To BLine.Length - 1
                 LineB.Add(BLine(u))
                 'main.Label2.Text += " " & BLine(u) & " |"
-                main.Label2.Text += BLine(u)
+                FRM_Main.Label2.Text += BLine(u)
                 If u = BLine.Length + 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
         End Sub
 
-        Private Function engine(ByVal completeString As String)
+        Private Function Engine(ByVal completeString As String)
             Dim u As Integer = completeString.Length
-            Dim bufferString As String = completeString
             Dim outputString As String = Nothing
-            Dim doesLineContainChar As Boolean = False
 
             For Each cryptchar In completeString
                 If LineA.IndexOf(cryptchar.ToString) = -1 Then
@@ -209,19 +216,22 @@
             Next
             Return outputString
         End Function
+
     End Class
 
     Public Class ROT5_cypher
-        Private Shared ALine As Array = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
-        Private Shared BLine As Array = {"6", "7", "8", "9", "0", "1", "2", "3", "4", "5"}
-        Private Shared LineA As New ArrayList
-        Private Shared LineB As New ArrayList
-        Private WithEvents encrypt_button As New Button
-        Private Sub encrypt_button_Click() Handles encrypt_button.Click
+        Private Shared ReadOnly ALine As Array = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}
+        Private Shared ReadOnly BLine As Array = {"6", "7", "8", "9", "0", "1", "2", "3", "4", "5"}
+        Private Shared ReadOnly LineA As New ArrayList
+        Private Shared ReadOnly LineB As New ArrayList
+        Private WithEvents Encrypt_button As New Button
+
+        Private Sub Encrypt_button_Click() Handles Encrypt_button.Click
             Dim b As New ROT5_cypher
-            main.TextBox2.Text = b.engine(main.TextBox1.Text)
+            FRM_Main.TextBox2.Text = b.Engine(FRM_Main.TextBox1.Text)
         End Sub
-        Public Shared Sub opener(ByVal form As Form)
+
+        Public Shared Sub Opener(ByVal form As Form)
             'set textbox sentence
             For Each ctrl In form.Controls
                 If ctrl.name = "GroupBox1" Then
@@ -238,36 +248,36 @@
 
             'create new button
             Dim s As New ROT5_cypher
-            With s.encrypt_button
+            With s.Encrypt_button
                 .Text = "ROT5 Cypher"
                 .Location = New Point(347, 50)
                 .Size = New Size(143, 26)
                 .Name = "cypherbutton"
             End With
-            form.Controls.Add(s.encrypt_button)
+            form.Controls.Add(s.Encrypt_button)
 
             'Fill Label
             LineA.Clear()
             LineB.Clear()
-            main.Label2.Text = Nothing
+            FRM_Main.Label2.Text = Nothing
             For u = 0 To ALine.Length - 1
                 LineA.Add(ALine(u))
-                main.Label2.Text += " " & ALine(u) & " |"
+                FRM_Main.Label2.Text += " " & ALine(u) & " |"
                 If u = ALine.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
-            main.Label2.Text += vbCrLf & "---------------------------------------" & vbCrLf
+            FRM_Main.Label2.Text += vbCrLf & "---------------------------------------" & vbCrLf
             For u = 0 To BLine.Length - 1
                 LineB.Add(BLine(u))
-                main.Label2.Text += " " & BLine(u) & " |"
+                FRM_Main.Label2.Text += " " & BLine(u) & " |"
                 If u = BLine.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
         End Sub
 
-        Private Function engine(ByVal completeString As String)
+        Private Function Engine(ByVal completeString As String)
             Dim outputString As String = Nothing
 
             For Each cryptchar In completeString
@@ -279,19 +289,22 @@
             Next
             Return outputString
         End Function
+
     End Class
 
     Public Class ROT18_cypher
-        Private Shared Aline As Array = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "1", "2", "3", "4", "5"}
-        Private Shared Bline As Array = {"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "6", "7", "8", "9", "0"}
-        Private Shared LineA As New ArrayList
-        Private Shared LineB As New ArrayList
-        Private WithEvents encrypt_button As New Button
-        Private Sub encrypt_button_Click() Handles encrypt_button.Click
+        Private Shared ReadOnly Aline As Array = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "1", "2", "3", "4", "5"}
+        Private Shared ReadOnly Bline As Array = {"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "6", "7", "8", "9", "0"}
+        Private Shared ReadOnly LineA As New ArrayList
+        Private Shared ReadOnly LineB As New ArrayList
+        Private WithEvents Encrypt_button As New Button
+
+        Private Sub Encrypt_button_Click() Handles Encrypt_button.Click
             Dim b As New ROT18_cypher
-            main.TextBox2.Text = b.engine(main.TextBox1.Text.ToString)
+            FRM_Main.TextBox2.Text = b.Engine(FRM_Main.TextBox1.Text.ToString)
         End Sub
-        Public Shared Sub opener(ByVal form As Form)
+
+        Public Shared Sub Opener(ByVal form As Form)
             'set textbox sentence
             For Each ctrl In form.Controls
                 If ctrl.name = "GroupBox1" Then
@@ -308,35 +321,36 @@
 
             'create new button
             Dim s As New ROT18_cypher
-            With s.encrypt_button
+            With s.Encrypt_button
                 .Text = "ROT18 Cypher"
                 .Location = New Point(347, 50)
                 .Size = New Size(143, 26)
                 .Name = "cypherbutton"
             End With
-            form.Controls.Add(s.encrypt_button)
+            form.Controls.Add(s.Encrypt_button)
 
             'Fill Label
             LineA.Clear()
             LineB.Clear()
-            main.Label2.Text = Nothing
+            FRM_Main.Label2.Text = Nothing
             For u = 0 To Aline.Length - 1
                 LineA.Add(Aline(u))
-                main.Label2.Text += " " & Aline(u) & " |"
+                FRM_Main.Label2.Text += " " & Aline(u) & " |"
                 If u = Aline.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
-            main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
+            FRM_Main.Label2.Text += vbCrLf & "--------------------------------------------------" & vbCrLf
             For u = 0 To Bline.Length - 1
                 LineB.Add(Bline(u))
-                main.Label2.Text += " " & Bline(u) & " |"
+                FRM_Main.Label2.Text += " " & Bline(u) & " |"
                 If u = Bline.Length - 1 Then
-                    main.Label2.Text = main.Label2.Text.Substring(0, main.Label2.Text.LastIndexOf("|"))
+                    FRM_Main.Label2.Text = FRM_Main.Label2.Text.Substring(0, FRM_Main.Label2.Text.LastIndexOf("|"))
                 End If
             Next
         End Sub
-        Public Function engine(ByVal completeString As String)
+
+        Public Function Engine(ByVal completeString As String)
             Dim outputString As String = Nothing
 
             For Each cryptchar In completeString
@@ -353,18 +367,20 @@
             Next
             Return outputString
         End Function
+
     End Class
 
     Public Class Rotate_by_cypher
-        Private Shared ALine As Array = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
-        Private Shared LineA As New ArrayList
-        Private WithEvents encrypt_button As New Button
-        Private Sub encrypt_button_Click() Handles encrypt_button.Click
+        Private Shared ReadOnly ALine As Array = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
+        Private Shared ReadOnly LineA As New ArrayList
+        Private WithEvents Encrypt_button As New Button
+
+        Private Sub Encrypt_button_Click() Handles Encrypt_button.Click
             Dim b As New Rotate_by_cypher
             Dim rot_by = InputBox("Rotation by?", myappfullname)
             If IsNumeric(rot_by) Then
                 If rot_by >= 0 And rot_by <= 25 Then
-                    main.TextBox2.Text = b.engine(main.TextBox1.Text, rot_by)
+                    FRM_Main.TextBox2.Text = b.Engine(FRM_Main.TextBox1.Text, rot_by)
                 Else
                     MsgBox("Please enter only NUMBERS between 0 and 25!", MsgBoxStyle.Information, myappfullname)
                 End If
@@ -372,7 +388,8 @@
                 MsgBox("Please enter only NUMBERS between 0 and 25!", MsgBoxStyle.Information, myappfullname)
             End If
         End Sub
-        Public Shared Sub opener(ByVal form As Form)
+
+        Public Shared Sub Opener(ByVal form As Form)
             'set textbox sentence
             For Each ctrl In form.Controls
                 If ctrl.name = "GroupBox1" Then
@@ -389,17 +406,17 @@
 
             'create new button
             Dim s As New Rotate_by_cypher
-            With s.encrypt_button
+            With s.Encrypt_button
                 .Text = "Rotate by * Cypher"
                 .Location = New Point(347, 50)
                 .Size = New Size(143, 26)
                 .Name = "cypherbutton"
             End With
-            form.Controls.Add(s.encrypt_button)
+            form.Controls.Add(s.Encrypt_button)
 
             'Fill Label
             LineA.Clear()
-            main.Label2.Text = "Rotation by given place" & vbCr & vbCr &
+            FRM_Main.Label2.Text = "Rotation by given place" & vbCr & vbCr &
                                 "Note: If you encrypt by 7, then decryption happens" & vbCr &
                                 "by 19 (26 - 7 = 19)"
             For Each i In ALine
@@ -407,11 +424,12 @@
             Next
         End Sub
 
-        Private Function engine(ByVal completeString As String, ByVal rotation_places As Short)
+        Private Function Engine(ByVal completeString As String, ByVal rotation_places As Short)
             Dim outputString As String = Nothing
-            Dim cryptcharstate As Boolean = False
 
             For Each cryptchar In completeString
+                Dim cryptcharstate As Boolean
+
                 'is upper?
                 If Char.IsLower(cryptchar.ToString) Then
                     cryptcharstate = True
@@ -430,7 +448,6 @@
                         Else
                             outputString += Char.ToLower(LineA((LineA.IndexOf(cryptchar.ToString) + rotation_places) - 26))
                         End If
-
                     Else
                         'check rotation
                         If LineA.IndexOf(cryptchar.ToString) + rotation_places <= 25 Then
@@ -441,11 +458,10 @@
                     End If
                 End If
 
-
             Next
             Return outputString
         End Function
-    End Class
 
+    End Class
 
 End Module

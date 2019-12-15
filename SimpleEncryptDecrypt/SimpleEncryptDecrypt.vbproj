@@ -11,7 +11,8 @@
     <AssemblyName>SimpleEncryptDecrypt</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -25,7 +26,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
@@ -47,6 +48,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>sed_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -73,21 +77,21 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="infobox.Designer.vb">
-      <DependentUpon>infobox.vb</DependentUpon>
+    <Compile Include="Forms\FRM_Infobox.Designer.vb">
+      <DependentUpon>FRM_Infobox.vb</DependentUpon>
     </Compile>
-    <Compile Include="infobox.vb">
+    <Compile Include="Forms\FRM_Infobox.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main.vb">
+    <Compile Include="Forms\FRM_Main.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main.Designer.vb">
-      <DependentUpon>main.vb</DependentUpon>
+    <Compile Include="Forms\FRM_Main.Designer.vb">
+      <DependentUpon>FRM_Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module1.vb" />
-    <Compile Include="Module2.vb" />
+    <Compile Include="Modules\Module1.vb" />
+    <Compile Include="Modules\Module2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -105,11 +109,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="infobox.resx">
-      <DependentUpon>infobox.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\FRM_Infobox.resx">
+      <DependentUpon>FRM_Infobox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main.resx">
-      <DependentUpon>main.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\FRM_Main.resx">
+      <DependentUpon>FRM_Main.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -119,6 +123,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -131,12 +136,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\1271570_big.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\paypal_donate.jpg" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\paypal-donate-button.png" />
     <Content Include="sed_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

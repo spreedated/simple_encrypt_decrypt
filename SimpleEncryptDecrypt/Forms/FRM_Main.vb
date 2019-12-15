@@ -1,8 +1,8 @@
-﻿Public Class main
+﻿Public Class FRM_Main
     Public keyShow As Boolean = False
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = myappfullname
-        init_toolstrip_box(Me)
+        Init_toolstrip_box(Me)
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Select Case keyShow
@@ -34,6 +34,6 @@
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        infobox.ShowDialog()
+        FRM_Infobox.ShowDialog()
     End Sub
 End Class

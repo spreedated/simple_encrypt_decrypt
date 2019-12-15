@@ -7,6 +7,6 @@ D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\Simp
 D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.exe
 D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.xml
 D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.pdb
-D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.main.resources
-D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.infobox.resources
-D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.vbprojResolveAssemblyReference.cache
+D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.vbprojAssemblyReference.cache
+D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.FRM_Infobox.resources
+D:\Daten\vbnet_projekte\SimpleEncryptDecrypt\SimpleEncryptDecrypt\obj\Debug\SimpleEncryptDecrypt.FRM_Main.resources
